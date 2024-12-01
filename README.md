@@ -1,9 +1,43 @@
-# Advent of Code in Swift (Template)
+# Advent of Code 2024 in Swift
+
+This is my solutions for Advent of code 2024 in Swift.
 
 [![Language](https://img.shields.io/badge/language-Swift-red.svg)](https://swift.org)
 
-Daily programming puzzles at [Advent of Code](<https://adventofcode.com/>), by
-[Eric Wastl](<http://was.tl/>). This is a small example starter project for
+Below is my current advancement in Advent of code:
+
+| Day | Part 1 | Part 2 |
+|:---|:---:|:---:|
+| Day 1 | :star: | :star: |
+| Day 2 |  |  |
+| Day 3 |  |  |
+| Day 4 |  |  |
+| Day 5 |  |  |
+| Day 6 |  |  |
+| Day 7 |  |  |
+| Day 8 |  |  |
+| Day 9 |  |  |
+| Day 10 |  |  |
+| Day 11 |  |  |
+| Day 12 |  |  |
+| Day 13 |  |  |
+| Day 14 |  |  |
+| Day 15 |  |  |
+| Day 16 |  |  |
+| Day 17 |  |  |
+| Day 18 |  |  |
+| Day 19 |  |  |
+| Day 20 |  |  |
+| Day 21 |  |  |
+| Day 22 |  |  |
+| Day 23 |  |  |
+| Day 24 |  |  |
+
+<details>
+<summary>How to use this repo</summary>
+
+Daily programming puzzles at [Advent of Code](https://adventofcode.com/), by
+[Eric Wastl](http://was.tl/). This is a small example starter project for
 building Advent of Code solutions.
 
 ## Usage
@@ -87,3 +121,4 @@ swift-format will use the built-in default style to lint and format code. A
 `.swift-format` configuration file can be used to customize the style used, see
 [Configuration](https://github.com/apple/swift-format/blob/main/Documentation/Configuration.md)
 for more details.
+</details>
