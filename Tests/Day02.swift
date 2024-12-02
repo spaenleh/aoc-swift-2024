@@ -15,8 +15,7 @@ struct Day02Tests {
 
   @Test("report analyzer")
   func name() async throws {
-    #expect(Report("7 6 4 2 1").value == [7, 6, 4, 2, 1])
-    #expect(ReportAnalyzer().isSafe(report: Report("7 6 4 2 1")) == true)
+    #expect(isSafe("7 6 4 2 1".integers()) == true)
   }
 
   @Test("part1")
