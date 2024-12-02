@@ -30,4 +30,20 @@ struct Day02Tests {
     let challenge = Day02(data: testData)
     #expect(challenge.part2() == 4)
   }
+
+  @Test("perms")
+  func testPerms() async throws {
+    #expect(getPermutationsExcludingOneElement([1, 2, 3]) == [[2, 3], [1, 3], [1, 2]])
+  }
+
+  @Test("more cases")
+  func testMoreCases() async throws {
+    #expect(
+      Day02(
+        data: """
+          1 2 3 4 10 11
+          10 9 8 7 1
+          """
+      ).part2() == 1)
+  }
 }

@@ -2,7 +2,6 @@ import Algorithms
 
 struct Report {
   var value: [Int]
-
 }
 extension Report {
   init(_ data: Substring) {
@@ -12,6 +11,16 @@ extension Report {
 
 func spreadsWell(_ value: Int) -> Bool {
   abs(value) <= 3 && abs(value) >= 1
+}
+
+func getPermutationsExcludingOneElement(_ arr: [Int]) -> [[Int]] {
+  var perms = [[Int]]()
+  for idx in 0..<arr.count {
+    var copiedArr = arr
+    let _ = copiedArr.remove(at: idx)
+    perms.append(copiedArr)
+  }
+  return perms
 }
 
 struct ReportAnalyzer {
@@ -33,25 +42,14 @@ struct ReportAnalyzer {
     let spread = diffs.filter { spreadsWell($0) }
 
     let isSafe = order.count == 1 && spread.count == diffs.count
-    if damped {
-
-      let orderIsOffByOne =
-        order.count == 2
-        && (order["desc", default: []].count == 1 || order["asc", default: []].count == 1)
-      // let spreadIsOffByOne = spread.count == diffs.count - 1
-      let spreadDefect = diffs.firstIndex { spreadsWell($0) == false }
-      if let defect = spreadDefect {
-        print(defect, report.value)
-        return ReportAnalyzer().isSafe(
-          report: Report(
-            value: report.value.filter {
-              $0 == report.value[defect + 1]
-            }))
-      }
-      // print("\(report): safe (\(isSafe)) order (\(orderIsOffByOne)) spread (\(spreadIsOffByOne))")
-      return isSafe || orderIsOffByOne
+    if damped && !isSafe {
+      let reportPermutations = getPermutationsExcludingOneElement(report.value)
+      let isAnySafe =
+        reportPermutations.map {
+          return ReportAnalyzer().isSafe(report: Report(value: Array($0)))
+        }.filter { $0 }.count >= 1
+      return isAnySafe
     }
-
     return isSafe
   }
 }
@@ -70,6 +68,5 @@ struct Day02: AdventDay {
 
   func part2() -> Int {
     reports.map { ReportAnalyzer().isSafe(report: $0, damped: true) }.filter { $0 }.count
-
   }
 }
