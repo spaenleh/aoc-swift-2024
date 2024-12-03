@@ -8,11 +8,9 @@ struct Day03: AdventDay {
 
     return data.ranges(of: search).map { match in
       let string = data[match].trimmingPrefix("mul(").trimmingCharacters(in: .punctuationCharacters)
-      print(string)
       let numbers = string.split(
         separator: ","
       )
-      print(numbers)
       return numbers.map {
         Int($0)
       }.compactMap {
