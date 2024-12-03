@@ -10,6 +10,11 @@ struct StringExtensions {
     #expect("\n\nhello\n".trimmed() == "hello")
   }
 
+  @Test("Concatenate Lines")
+  func testConcatLines() async throws {
+    #expect("h\ne\nl\nl\no".concatLines() == "hello")
+  }
+
   @Test("Lines Parsing")
   func testLinesParsing() async throws {
     #expect("".lines() == [])

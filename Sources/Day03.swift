@@ -3,23 +3,33 @@ import Algorithms
 struct Day03: AdventDay {
   var data: String
 
-  func part1() -> Int {
-    let search = /mul\((\d+),(\d+)\)/
-
-    return data.ranges(of: search).map { match in
-      let string = data[match].trimmingPrefix("mul(").trimmingCharacters(in: .punctuationCharacters)
-      let numbers = string.split(
-        separator: ","
-      )
-      return numbers.map {
-        Int($0)
-      }.compactMap {
-        $0
-      }.reduce(1, *)
+  /// computes the operations from a corrupter memory dump
+  func compute(data input: String) -> Int {
+    input.ranges(of: /mul\(\d+,\d+\)/).map { match in
+      input[match].trimmingPrefix("mul(").trimmingCharacters(in: .punctuationCharacters)
+        .split(
+          separator: ","
+        )
+        .map {
+          Int($0)
+        }.compactMap {
+          $0
+        }.reduce(1, *)
     }.sum
   }
 
+  func part1() -> Int {
+    compute(data: data)
+  }
+
   func part2() -> Int {
-    0
+    let singleLine = data.replacingOccurrences(of: "\n", with: "")
+
+    /// remove anything that is between a "don't()" and a "do()"
+    /// be careful to match as few characters as possible with `.*?`
+    let newData = singleLine.replacing(
+      /(don't\(\).*?do\(\))/, with: "")
+
+    return compute(data: newData)
   }
 }

@@ -6,6 +6,10 @@ extension StringProtocol {
     self.trimmingCharacters(in: .whitespacesAndNewlines)
   }
 
+  func concatLines() -> String {
+    self.replacingOccurrences(of: "\n", with: "")
+  }
+
   func lines() -> [SubSequence] {
     self.split(separator: "\n")
   }
