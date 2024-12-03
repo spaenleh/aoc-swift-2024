@@ -1,13 +1,24 @@
 import Algorithms
 
 struct Day03: AdventDay {
-  // Save your data in a corresponding text file in the `Data` directory.
   var data: String
 
-  // add here any computed values useful for the challenge
-
   func part1() -> Int {
-    0
+    let search = /mul\((\d+),(\d+)\)/
+
+    return data.ranges(of: search).map { match in
+      let string = data[match].trimmingPrefix("mul(").trimmingCharacters(in: .punctuationCharacters)
+      print(string)
+      let numbers = string.split(
+        separator: ","
+      )
+      print(numbers)
+      return numbers.map {
+        Int($0)
+      }.compactMap {
+        $0
+      }.reduce(1, *)
+    }.sum
   }
 
   func part2() -> Int {
