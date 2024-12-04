@@ -14,6 +14,10 @@ extension StringProtocol {
     self.split(separator: "\n")
   }
 
+  func toCharacterGrid() -> [[Substring.Element]] {
+    self.lines().map { Array($0) }
+  }
+
   func integers(separator: String = " ") -> [Int] {
     self.split(separator: separator).map { Int($0) }.compactMap { $0 }
   }
