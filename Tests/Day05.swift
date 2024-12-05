@@ -50,6 +50,9 @@ struct Day05Tests {
   @Test("part2")
   func testPart2() async throws {
     let challenge = Day05(data: testData)
-    #expect(challenge.part2() == 0)
+    #expect(challenge.fixOrder([75, 97, 47, 61, 53]) == [97, 75, 47, 61, 53])
+    #expect(challenge.fixOrder([61, 13, 29]) == [61, 29, 13])
+    #expect(challenge.fixOrder([97, 13, 75, 29, 47]) == [97, 75, 47, 29, 13])
+    #expect(challenge.part2() == 123)
   }
 }

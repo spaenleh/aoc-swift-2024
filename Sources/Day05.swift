@@ -1,21 +1,12 @@
 import Algorithms
 
-struct Rule {
-  var before: Int
-  var after: Int
-
-}
-extension Rule {
-  init(data: Substring) {
-    let parts = data.split(separator: "|")
-    before = Int(parts[0]) ?? 0
-    after = Int(parts[1]) ?? 0
-  }
-}
-
 struct Day05: AdventDay {
   var rules: [Int: [Int]]
   var updates: [[Int]]
+
+  func middlePage(_ update: [Int]) -> Int {
+    update[update.count / 2]
+  }
 
   init(data: String) {
     let parts = data.split(separator: "\n\n")
@@ -29,22 +20,44 @@ struct Day05: AdventDay {
     updates = parts[1].lines().map { $0.integers(separator: ",") }
   }
 
+  func isCorrect(_ update: [Int]) -> Bool {
+    for (idx, page) in update.enumerated() {
+      let rulesForPage = rules[page, default: [Int]()]
+      let brokenRules = rulesForPage.map { update[idx + 1..<update.count].contains($0) }.count {
+        $0 == true
+      }
+      if brokenRules > 0 {
+        return false
+      }
+    }
+    return true
+  }
+
   func part1() -> Int {
-    updates.filter { update in
-      for (idx, page) in update.enumerated() {
-        let rulesForPage = rules[page, default: [Int]()]
-        let brokenRules = rulesForPage.map { update[idx + 1..<update.count].contains($0) }.count {
-          $0 == true
-        }
-        if brokenRules > 0 {
-          return false
+    updates.filter { isCorrect($0) }.map { middlePage($0) }.sum
+  }
+
+  func fixOrder(_ update: [Int]) -> [Int] {
+    var fixedUpdate = update
+    for (idx, page) in update.enumerated() {
+      let rulesForPage = rules[page, default: [Int]()]
+      let brokenRules = rulesForPage.map { update[idx + 1..<update.count].contains($0) }
+      for (isBroken, infringingPage) in zip(brokenRules, rulesForPage) {
+        if isBroken {
+          if let infringingIndex = fixedUpdate.firstIndex(of: infringingPage) {
+            let value = fixedUpdate.remove(at: infringingIndex)
+            fixedUpdate.insert(value, at: idx)
+          }
         }
       }
-      return true
-    }.map { update in update[update.count / 2] }.sum
+    }
+    if !isCorrect(fixedUpdate) {
+      fixedUpdate = fixOrder(fixedUpdate)
+    }
+    return fixedUpdate
   }
 
   func part2() -> Int {
-    0
+    updates.filter { !isCorrect($0) }.map { middlePage(fixOrder($0)) }.sum
   }
 }

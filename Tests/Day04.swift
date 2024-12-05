@@ -27,7 +27,7 @@ struct Day04Tests {
         XMAS
         """)
     #expect(
-      searchInNeighbors(pos: Coord(x: 0, y: 0), grid) == [Coord(x: 1, y: 0), Coord(x: 1, y: 1)])
+      searchInNeighbors(pos: Coord(x: 0, y: 0), grid) == [Coord(x: 1, y: 1), Coord(x: 1, y: 0)])
   }
 
   @Test("part1 simple")
@@ -39,7 +39,7 @@ struct Day04Tests {
       XMAS
       """
     let challenge = Day04(data: grid)
-    #expect(challenge.part1() == 2)
+    #expect(challenge.part1() == 6)
   }
 
   @Test("part1")
