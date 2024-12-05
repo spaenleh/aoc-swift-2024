@@ -25,12 +25,13 @@ extension Grid {
   init(from data: String) {
     self.raw = data.lines().map { Array($0) }
   }
-    
-    func toText() -> String {
-        String(self.raw.map {
-            String($0)
-        }.joined(by: "\n"))
-    }
+
+  func toText() -> String {
+    String(
+      self.raw.map {
+        String($0)
+      }.joined(by: "\n"))
+  }
 
   func includes(coord: Coord) -> Bool {
     coord.x >= 0 && coord.x <= self.width - 1 && coord.y >= 0 && coord.y <= self.height - 1
