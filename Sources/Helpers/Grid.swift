@@ -36,4 +36,14 @@ extension Grid {
   func includes(coord: Coord) -> Bool {
     coord.x >= 0 && coord.x <= self.width - 1 && coord.y >= 0 && coord.y <= self.height - 1
   }
+
+  func firstCoord(of char: Character) -> Coord? {
+    let index = self.raw.flatMap { $0 }.firstIndex(of: char)
+    if let index = index {
+      let x = index % self.width
+      let y = index / self.width
+      return Coord(x: x, y: y)
+    }
+    return nil
+  }
 }

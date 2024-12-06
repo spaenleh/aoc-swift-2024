@@ -15,10 +15,14 @@ struct Coord {
   /// Offsets for the cross elements (+ shape)
   ///
   static let cross = [
+    //north
     Coord(x: 0, y: -1),
-    Coord(x: 0, y: 1),
-    Coord(x: -1, y: 0),
+    // east
     Coord(x: 1, y: 0),
+    // south
+    Coord(x: 0, y: 1),
+    // west
+    Coord(x: -1, y: 0),
   ]
 
   var cornerNeighbors: [Coord] {
@@ -40,6 +44,28 @@ struct Coord {
 }
 
 extension Coord: Equatable {}
+
+extension Coord: Hashable {}
+
+extension Coord: RawRepresentable {
+  init?(rawValue: String) {
+    let parts = rawValue.integers(separator: ",")
+    x = parts[0]
+    y = parts[1]
+  }
+
+  var rawValue: String {
+    "(\(x),\(y))"
+  }
+
+  typealias RawValue = String
+}
+
+extension Coord: CustomStringConvertible {
+  var description: String {
+    "\(x),\(y)"
+  }
+}
 
 extension Coord: AdditiveArithmetic {
   static let zero = Coord(x: 0, y: 0)
