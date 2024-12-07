@@ -141,7 +141,7 @@ struct Day06: AdventDay {
 
   func part2() -> Int {
     var count = 0
-    let obstacles = guardPatrol().obstacles
+    let (_, steps, obstacles) = guardPatrol()
 
     var newObstacles: [Coord] = [Coord]()
     for (offset, candidates) in obstacles.windows(ofCount: 4).enumerated() {
@@ -154,14 +154,16 @@ struct Day06: AdventDay {
       if offset > 4 {
 
         // TODO: this is not right
-        for (idx, elem) in obstacles[0...0].enumerated() {
+        for (idx, elem) in obstacles[0...offset].enumerated() {
           print("trying", idx, elem)
           let wrappedOffset = offset % 4
           c[3] = elem
           if let coord = isAValidLoop(wrappedOffset: wrappedOffset, c: c) {
-            count += 1
-            newObstacles.append(coord)
-            print(c)
+            if steps.contains(coord) {
+              count += 1
+              newObstacles.append(coord)
+              print(c)
+            }
           }
         }
 
