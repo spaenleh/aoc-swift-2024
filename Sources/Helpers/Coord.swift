@@ -80,6 +80,25 @@ extension Coord: AdditiveArithmetic {
   }
 }
 
+extension Coord: DurationProtocol {
+  static func / (lhs: Coord, rhs: Int) -> Coord {
+    return Self(x: lhs.x / rhs, y: lhs.y / rhs)
+  }
+
+  static func * (lhs: Coord, rhs: Int) -> Coord {
+    return Self(x: lhs.x * rhs, y: lhs.y * rhs)
+  }
+
+  static func / (lhs: Coord, rhs: Coord) -> Double {
+    return 0
+  }
+
+  static func < (lhs: Coord, rhs: Coord) -> Bool {
+    return false
+  }
+
+}
+
 extension Array where Array.Element == Coord {
   func included(in grid: Grid) -> Self {
     self.filter { $0.isInside(grid: grid) }
