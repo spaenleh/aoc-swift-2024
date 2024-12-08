@@ -25,7 +25,7 @@ struct Day08: AdventDay {
 
   func part1() -> Int {
     var antiNodes: Set<Coord> = Set()
-    for (key, values) in antennaLocations {
+    for (_, values) in antennaLocations {
       for pair in values.combinations(ofCount: 2) {
         let offset = pair[1] - pair[0]
         [
@@ -51,7 +51,7 @@ struct Day08: AdventDay {
 
   func part2() -> Int {
     var antiNodes: Set<Coord> = Set()
-    for (key, values) in antennaLocations {
+    for (_, values) in antennaLocations {
       for pair in values.combinations(ofCount: 2) {
         let offset = pair[1] - pair[0]
         var localNodes = walkAntiNodes(antenna: pair[0], offset: offset * -1)
