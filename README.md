@@ -16,7 +16,7 @@ Below is my current advancement in Advent of code:
 | Day 6 | :star: | :sad: |
 | Day 7 | :star: (45min) | :star: (33min) |
 | Day 8 | :star: (20min) | :star: (16min) |
-| Day 9 |  |  |
+| Day 9 | :star: (1h51) | :star: (43min) |
 | Day 10 |  |  |
 | Day 11 |  |  |
 | Day 12 |  |  |
