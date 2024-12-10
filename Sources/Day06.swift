@@ -99,14 +99,12 @@ struct Day06: AdventDay {
     if wrappedOffset == 0 {
       if c[c.startIndex].x > c[c.endIndex - 1].x {
         let coord = Coord(x: c[c.startIndex].x - 1, y: c[c.endIndex - 1].y)
-        print("yes 0", coord)
         return coord
       }
     }
     if wrappedOffset == 1 {
       if c[c.startIndex].y > c[c.endIndex - 1].y {
         let coord = Coord(x: c[c.startIndex].x, y: c[c.startIndex].y - 1)
-        print("yes 1", coord)
         return coord
       }
     }
@@ -114,14 +112,12 @@ struct Day06: AdventDay {
 
       if c[c.startIndex].x < c[c.endIndex - 1].x {
         let coord = Coord(x: c[c.endIndex - 1].x + 1, y: c[c.startIndex].y)
-        print("yes 2", coord)
         return coord
       }
     }
     if wrappedOffset == 3 {
       if c[c.startIndex].y < c[c.endIndex - 1].y {
         let coord = Coord(x: c[c.endIndex - 1].x, y: c[c.startIndex].y + 1)
-        print("yes 3", coord)
         return coord
       }
     }
@@ -143,22 +139,19 @@ struct Day06: AdventDay {
       if offset > 4 {
 
         // TODO: this is not right
-        for (idx, elem) in obstacles[0...offset].enumerated() {
-          print("trying", idx, elem)
+        for (_, elem) in obstacles[0...offset].enumerated() {
           let wrappedOffset = offset % 4
           c[3] = elem
           if let coord = isAValidLoop(wrappedOffset: wrappedOffset, c: c) {
             if steps.contains(coord) {
               count += 1
               newObstacles.append(coord)
-              print(c)
             }
           }
         }
 
       }
     }
-    print(newObstacles)
 
     // 115 -> too low
     return count

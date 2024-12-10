@@ -31,4 +31,12 @@ struct StringExtensions {
     #expect("a 1 toto 1.3".doubles() == [1.0, 1.3])
     #expect("1 2 3 4".integers() == [1, 2, 3, 4])
   }
+
+  @Test func testCharacterGrid() async throws {
+    #expect(
+      """
+      abc
+      def
+      """.toCharacterGrid() == [["a", "b", "c"], ["d", "e", "f"]])
+  }
 }

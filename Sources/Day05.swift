@@ -12,9 +12,9 @@ struct Day05: AdventDay {
     let parts = data.split(separator: "\n\n")
     rules = [Int: [Int]]()
     for line in parts[0].lines() {
-      let parts = line.split(separator: "|")
-      let before = Int(parts[0]) ?? 0
-      let after = Int(parts[1]) ?? 0
+      let parts = line.integers(separator: "|")
+      let before = parts[0]
+      let after = parts[1]
       rules[after, default: [Int]()].append(before)
     }
     updates = parts[1].lines().map { $0.integers(separator: ",") }

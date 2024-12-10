@@ -95,7 +95,6 @@ struct Day09: AdventDay {
         // increment the pointer
         pointer += file.capacity
         if disk.count == 0 {
-          print("we are done here !")
           break
         }
         continue

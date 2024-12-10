@@ -41,7 +41,6 @@ struct Day07: AdventDay {
           res *= value
         }
       }
-      // print(calibration, "->", res)
       if res == calibration.result {
 
         // early from the loop
@@ -81,9 +80,7 @@ struct Day07: AdventDay {
           res = Int(String(res) + String(value)) ?? 0
         }
       }
-      // print(calibration, "->", res)
       if res == calibration.result {
-
         // early from the loop
         return true
       }
