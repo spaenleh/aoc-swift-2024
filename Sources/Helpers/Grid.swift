@@ -11,8 +11,11 @@ struct Grid {
     raw.count
   }
 
-  subscript(_ coord: Coord) -> Element {
-    raw[coord.y][coord.x]
+  subscript(_ coord: Coord) -> Element? {
+    if coord.isInside(grid: self) {
+      return raw[coord.y][coord.x]
+    }
+    return nil
   }
 
   subscript(col: Int, row: Int) -> Element {
@@ -45,5 +48,18 @@ extension Grid {
       return Coord(x: x, y: y)
     }
     return nil
+  }
+
+  func findAll(of char: Character) -> [Coord] {
+    var coords = [Coord]()
+    for i in 0..<height {
+      for j in 0..<width {
+        let current = Coord(x: j, y: i)
+        if self[current] == char {
+          coords.append(current)
+        }
+      }
+    }
+    return coords
   }
 }
