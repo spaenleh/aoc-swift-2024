@@ -73,7 +73,6 @@ struct Day06: AdventDay {
       if nextPos == step {
         officer.direction = officer.direction.makeTurn()
       } else {
-
         if !grid.includes(coord: nextPos) {
           return false
         }
@@ -95,16 +94,6 @@ struct Day06: AdventDay {
   func part1() -> Int {
     guardPatrol().locations.count
   }
-
-  // func part2() -> Int {
-  //   var potentialObstacles: [Coord] = [Coord]()
-  //   for step in Set(guardPatrol().steps) {
-  //     if doesComeBack(step: step) {
-  //       potentialObstacles.append(step)
-  //     }
-  //   }
-  //   return Set(potentialObstacles).count
-  // }
 
   func isAValidLoop(wrappedOffset: Int, c: [Coord]) -> Coord? {
     if wrappedOffset == 0 {

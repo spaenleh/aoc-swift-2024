@@ -9,7 +9,7 @@ func searchInNeighbors(pos: Coord, _ grid: Grid) -> [Coord] {
 func isMAS(pos: Coord, _ grid: Grid) -> Bool {
   let candidates = pos.cornerNeighbors
   if (candidates.allSatisfy { $0.isInside(grid: grid) }) {
-    let l = candidates.map { grid[$0] }
+    let l = candidates.map { grid[$0] }.compactMap { $0 }
     let letterSet = Set(l)
     // same letter can not be on opposite side
     return l[0] != l[2] && l[1] != l[3] && letterSet.count == 2 && letterSet == ["M", "S"]
@@ -20,8 +20,8 @@ func isMAS(pos: Coord, _ grid: Grid) -> Bool {
 func isWhole(pos: Coord, inDir: Coord, grid: Grid) -> Bool {
   let aPos = pos + inDir
   let sPos = aPos + inDir
-  if aPos.isInside(grid: grid) && sPos.isInside(grid: grid) {
-    return grid[aPos] == "A" && grid[sPos] == "S"
+  if let aValue = grid[aPos], let sValue = grid[sPos] {
+    return aValue == "A" && sValue == "S"
   }
   return false
 }
