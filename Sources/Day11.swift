@@ -3,7 +3,7 @@ import Algorithms
 struct Day11: AdventDay {
   var data: String
 
-  func getStones(data: String) -> [Int: Int] {
+  static func getStones(data: String) -> [Int: Int] {
     var stones = [Int: Int]()
     data.trimmed().integers().forEach { stone in
       stones[stone, default: 0] += 1
@@ -12,7 +12,7 @@ struct Day11: AdventDay {
   }
 
   func stoneMe(blinks: Int) -> Int {
-    var stones = getStones(data: data)
+    var stones = Self.getStones(data: data)
     for _ in 0..<blinks {
       var newStones = [Int: Int]()
       for (stone, count) in stones {
