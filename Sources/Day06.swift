@@ -28,7 +28,7 @@ struct Guard {
 }
 
 struct Day06: AdventDay {
-  var grid: Grid
+  var grid: Grid<Character>
   init(data: String) {
     grid = Grid(from: data)
   }
@@ -38,7 +38,7 @@ struct Day06: AdventDay {
     var steps: [Coord] = [Coord]()
     var obstacles: [Coord] = [Coord]()
     var officer = Guard(pos: grid.firstCoord(of: "^")!, direction: .North)
-    while officer.pos.isInside(grid: grid) {
+    while grid.includes(coord: officer.pos) {
       // save position
       locations.insert(officer.pos)
 
@@ -64,7 +64,7 @@ struct Day06: AdventDay {
   func doesComeBack(step: Coord) -> Bool {
     var officer = Guard(pos: grid.firstCoord(of: "^")!, direction: .North)
     var locations: [Coord] = [Coord]()
-    while officer.pos.isInside(grid: grid) {
+    while grid.includes(coord: officer.pos) {
       locations.append(officer.pos)
 
       // move the guard

@@ -1,7 +1,7 @@
 import Algorithms
 
 struct Day10: AdventDay {
-  var grid: Grid
+  var grid: Grid<Character>
 
   init(data: String) {
     grid = Grid(from: data)

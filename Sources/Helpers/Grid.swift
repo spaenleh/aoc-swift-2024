@@ -1,6 +1,4 @@
-struct Grid {
-  typealias Element = Character
-
+struct Grid<Element: Sendable> {
   var raw: [[Element]]
 
   // dimensions
@@ -12,7 +10,7 @@ struct Grid {
   }
 
   subscript(_ coord: Coord) -> Element? {
-    if coord.isInside(grid: self) {
+    if self.includes(coord: coord) {
       return raw[coord.y][coord.x]
     }
     return nil
@@ -21,9 +19,21 @@ struct Grid {
   subscript(col: Int, row: Int) -> Element {
     raw[row][col]
   }
+
+  func includes(coord: Coord) -> Bool {
+    coord.x >= 0 && coord.x <= self.width - 1 && coord.y >= 0 && coord.y <= self.height - 1
+  }
+
+  func filter(allInside: [Coord]) -> [Coord] {
+    allInside.filter { self.includes(coord: $0) }
+  }
 }
 
-extension Grid {
+extension Grid: Sendable {
+
+}
+
+extension Grid where Element == Character {
   /// creates a Grid of characters from a multiline string
   init(from data: String) {
     self.raw = data.lines().map { Array($0) }
@@ -36,11 +46,7 @@ extension Grid {
       }.joined(by: "\n"))
   }
 
-  func includes(coord: Coord) -> Bool {
-    coord.x >= 0 && coord.x <= self.width - 1 && coord.y >= 0 && coord.y <= self.height - 1
-  }
-
-  func firstCoord(of char: Character) -> Coord? {
+  func firstCoord(of char: Element) -> Coord? {
     let index = self.raw.flatMap { $0 }.firstIndex(of: char)
     if let index = index {
       let x = index % self.width

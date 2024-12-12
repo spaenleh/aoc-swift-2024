@@ -1,14 +1,14 @@
 import Algorithms
 
-func searchInNeighbors(pos: Coord, _ grid: Grid) -> [Coord] {
-  pos.fullNeighbors.included(in: grid).filter { n in
+func searchInNeighbors(pos: Coord, _ grid: Grid<Character>) -> [Coord] {
+  grid.filter(allInside: pos.fullNeighbors).filter { n in
     grid[n] == "M"
   }
 }
 
-func isMAS(pos: Coord, _ grid: Grid) -> Bool {
+func isMAS(pos: Coord, _ grid: Grid<Character>) -> Bool {
   let candidates = pos.cornerNeighbors
-  if (candidates.allSatisfy { $0.isInside(grid: grid) }) {
+  if grid.filter(allInside: candidates).count == 4 {
     let l = candidates.map { grid[$0] }.compactMap { $0 }
     let letterSet = Set(l)
     // same letter can not be on opposite side
@@ -17,7 +17,7 @@ func isMAS(pos: Coord, _ grid: Grid) -> Bool {
   return false
 }
 
-func isWhole(pos: Coord, inDir: Coord, grid: Grid) -> Bool {
+func isWhole(pos: Coord, inDir: Coord, grid: Grid<Character>) -> Bool {
   let aPos = pos + inDir
   let sPos = aPos + inDir
   if let aValue = grid[aPos], let sValue = grid[sPos] {
@@ -27,12 +27,12 @@ func isWhole(pos: Coord, inDir: Coord, grid: Grid) -> Bool {
 }
 
 struct Day04: AdventDay {
-  var grid: Grid
+  var grid: Grid<Character>
   init(data: String) {
     grid = Grid(from: data)
   }
 
-  func countAllWhere(letter search: Character, predicate: (Coord, Grid) -> Bool) -> Int {
+  func countAllWhere(letter search: Character, predicate: (Coord, Grid<Character>) -> Bool) -> Int {
     grid.raw.enumerated().map { (y, line) in
       line.enumerated().map { (x, letter) in
         if letter == search {

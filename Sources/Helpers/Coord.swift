@@ -36,11 +36,6 @@ struct Coord {
   var fullNeighbors: [Coord] {
     self.cornerNeighbors + self.crossNeighbors
   }
-
-  func isInside(grid: Grid) -> Bool {
-    self.x >= 0 && self.x <= grid.width - 1 && self.y >= 0 && self.y <= grid.height - 1
-  }
-
 }
 
 extension Coord: Equatable {}
@@ -87,11 +82,5 @@ extension Coord {
 
   static func * (lhs: Coord, rhs: Int) -> Coord {
     return Self(x: lhs.x * rhs, y: lhs.y * rhs)
-  }
-}
-
-extension Array where Array.Element == Coord {
-  func included(in grid: Grid) -> Self {
-    self.filter { $0.isInside(grid: grid) }
   }
 }
