@@ -24,7 +24,6 @@ enum Border: Hashable {
     case .west: .west
     }
   }
-
 }
 
 enum CardDirection: Int, CustomStringConvertible {
@@ -36,7 +35,6 @@ enum CardDirection: Int, CustomStringConvertible {
     case .west: "W"
     }
   }
-
   case north = 0
   case east
   case south
@@ -47,7 +45,6 @@ struct Side: CustomStringConvertible {
   var description: String {
     "Side(\(direction)|\(border) \(values))"
   }
-
   var direction: CardDirection
   var border: Border
   var values: [Int]
@@ -60,33 +57,14 @@ struct Field {
   var coords: [Coord] = [Coord]()
   var sides: [Border: [Int]] = [Border: [Int]]()
   var sideCount: Int {
-    let allSides = sides.values.map { side in
+    let allSides = sides.map { (border, side) in
       let sortedSide = side.sorted()
-      print("sorted", sortedSide)
-      return zip(sortedSide, sortedSide.dropFirst()).map { $1 - $0 }.filter { $0 > 1 }.count + 1
+      let diffs = zip(sortedSide, sortedSide.dropFirst()).map { $1 - $0 }
+      let nbSides = diffs.filter { $0 > 1 }.count + 1
+      return nbSides
     }
-    print("allsides", allSides)
-    return allSides.compactMap { $0 }.count
+    return allSides.sum
   }
-
-  // mutating func extendSides(idx: Int, pos: Coord) {
-  //   let (border, otherAxis) = Border.create(direction: idx, coord: pos)
-  //   let sideIdx = sides.firstIndex { side in
-  //     if side.direction == border.toCardDirection() && side.border == border {
-  //       let max = side.values.max() ?? -1
-  //       let min = side.values.min() ?? -1
-  //       if max + 1 == otherAxis || min - 1 == otherAxis {
-  //         return true
-  //       }
-  //     }
-  //     return false
-  //   }
-  //   if let sideIdx {
-  //     sides[sideIdx].values.append(otherAxis)
-  //   } else {
-  //     sides.append(Side(direction: border.toCardDirection(), border: border, values: [otherAxis]))
-  //   }
-  // }
 
   mutating func addSide(idx: Int, pos: Coord) {
     let (border, otherAxis) = Border.create(direction: idx, coord: pos)
@@ -136,15 +114,11 @@ struct Day12: AdventDay {
           // this is a frontier
           field.perimeter += 1
           field.addSide(idx: idx, pos: neighbor)
-          // print("border found at", pos)
-          // print(field.sides)
         }
       } else {
         // this is the frontier of the grid
         field.perimeter += 1
         field.addSide(idx: idx, pos: neighbor)
-        // print(field.sideCount)
-
       }
     }
     return field
@@ -160,7 +134,6 @@ struct Day12: AdventDay {
         guard record[currentPos] == nil else {
           continue
         }
-
         if let gridValue = grid[currentPos] {
           // start a new field
           let field = exploreField(
@@ -169,7 +142,6 @@ struct Day12: AdventDay {
           field.coords.forEach { s in
             record[s] = true
           }
-          print("sides of ", gridValue, field.sideCount)
         }
       }
     }
@@ -177,14 +149,10 @@ struct Day12: AdventDay {
   }
 
   func part1() -> Int {
-
     return getFields().map { $0.compute1() }.sum
   }
 
   func part2() -> Int {
-    // merge sides that are next to each other
-
     return getFields().map { $0.compute2() }.sum
-
   }
 }

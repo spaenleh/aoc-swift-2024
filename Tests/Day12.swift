@@ -59,7 +59,6 @@ struct Day12Tests {
           EEEC
           """
       ).part2() == 80)
-    print("------")
     #expect(
       Day12(
         data: """
@@ -80,7 +79,7 @@ struct Day12Tests {
           ABBAAA
           AAAAAA
           """
-      ).part2() == 236)
+      ).part2() == 368)
   }
 
   @Test("part2")
