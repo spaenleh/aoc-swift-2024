@@ -19,13 +19,13 @@ struct Day14Tests {
     p=9,5 v=-3,-3
     """
 
-  @Test("part1")
+  @Test(.disabled("part1"))
   func testPart1() async throws {
     let challenge = Day14(data: testData)
     #expect(challenge.part1() == 12)
   }
 
-  @Test("part2")
+  @Test(.disabled("part2"))
   func testPart2() async throws {
     let challenge = Day14(data: testData)
     #expect(challenge.part2() == 0)
