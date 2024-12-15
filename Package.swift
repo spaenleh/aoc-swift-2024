@@ -5,15 +5,18 @@ let dependencies: [Target.Dependency] = [
     .product(name: "Algorithms", package: "swift-algorithms"),
     .product(name: "Collections", package: "swift-collections"),
     .product(name: "ArgumentParser", package: "swift-argument-parser"),
+    .product(name: "MLX", package: "mlx-swift"),
+    .product(name: "MLXFFT", package: "mlx-swift"),
 ]
 
 let package = Package(
     name: "aoc",
-    platforms: [.macOS(.v13)],
+    platforms: [.macOS(.v14)],
     dependencies: [
         .package(
             url: "https://github.com/apple/swift-algorithms.git",
             .upToNextMajor(from: "1.2.0")),
+        .package(url: "https://github.com/ml-explore/mlx-swift.git", from: "0.21.2"),
         .package(
             url: "https://github.com/apple/swift-collections.git",
             .upToNextMajor(from: "1.0.0")),

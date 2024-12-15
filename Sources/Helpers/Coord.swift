@@ -12,17 +12,21 @@ struct Coord {
     Coord(x: -1, y: 1),
   ]
 
+  static let up = Coord(x: 0, y: -1)
+  static let right = Coord(x: 1, y: 0)
+  static let down = Coord(x: 0, y: 1)
+  static let left = Coord(x: -1, y: 0)
   /// Offsets for the cross elements (+ shape)
-  ///
+  /// up, right, down, left
   static let cross = [
     //north
-    Coord(x: 0, y: -1),
+    up,
     // east
-    Coord(x: 1, y: 0),
+    right,
     // south
-    Coord(x: 0, y: 1),
+    down,
     // west
-    Coord(x: -1, y: 0),
+    left,
   ]
 
   var cornerNeighbors: [Coord] {

@@ -5,7 +5,10 @@ enum Direction: Int {
   case East, South, West
 
   func heading() -> Coord {
-    Coord.cross[rawValue]
+    if Coord.cross.indices.contains(rawValue) {
+      return Coord.cross[rawValue]
+    }
+    fatalError()
   }
 
   static func fromHeading(coord: Coord) -> Self {
@@ -18,7 +21,7 @@ enum Direction: Int {
 
 }
 
-struct Guard {
+struct Guard: Hashable {
   var pos: Coord
   var direction: Direction
 
@@ -61,29 +64,28 @@ struct Day06: AdventDay {
     return (locations, steps, obstacles)
   }
 
-  func doesComeBack(step: Coord) -> Bool {
-    var officer = Guard(pos: grid.firstCoord(of: "^")!, direction: .North)
-    var locations: [Coord] = [Coord]()
-    while grid.includes(coord: officer.pos) {
-      locations.append(officer.pos)
+  func doesComeBack(step: Coord, path: [Coord].SubSequence, grid newGrid: Grid<Character>) -> Bool {
+    guard let officerPos = newGrid.firstCoord(of: "^") else {
+      return false
+    }
+    var officer = Guard(pos: officerPos, direction: .North)
+    var locations: [Guard] = [Guard]()
+    while newGrid.includes(coord: officer.pos) {
+      // check if we are going over our steps
+      if locations.contains(officer) {
+        return true
+      }
+      locations.append(officer)
 
       // move the guard
       let nextPos = officer.pos + officer.direction.heading()
-      // behave like there is a real obstacle
-      if nextPos == step {
-        officer.direction = officer.direction.makeTurn()
-      } else {
-        if !grid.includes(coord: nextPos) {
-          return false
-        }
-        if grid[nextPos] == "#" {
-          // guard is blocked
-          officer.direction = officer.direction.makeTurn()
-        }
+
+      if !newGrid.includes(coord: nextPos) {
+        return false
       }
-      // check if we are going over our steps
-      if locations.contains([officer.pos, nextPos]) {
-        return true
+      if let nextChar = newGrid[nextPos], nextChar == "#" {
+        // guard is blocked
+        officer.direction = officer.direction.makeTurn()
       }
       // move officer one step
       officer.pos = officer.pos + officer.direction.heading()
@@ -125,35 +127,25 @@ struct Day06: AdventDay {
   }
 
   func part2() -> Int {
+
+    let (_, steps, _) = guardPatrol()
     var count = 0
-    let (_, steps, obstacles) = guardPatrol()
-
-    var newObstacles: [Coord] = [Coord]()
-    for (offset, candidates) in obstacles.windows(ofCount: 4).enumerated() {
-      var c = Array(candidates)
-      let wrappedOffset = offset % 4
-      if let coord = isAValidLoop(wrappedOffset: wrappedOffset, c: c) {
-        count += 1
-        newObstacles.append(coord)
-      }
-      if offset > 4 {
-
-        // TODO: this is not right
-        for (_, elem) in obstacles[0...offset].enumerated() {
-          let wrappedOffset = offset % 4
-          c[3] = elem
-          if let coord = isAValidLoop(wrappedOffset: wrappedOffset, c: c) {
-            if steps.contains(coord) {
-              count += 1
-              newObstacles.append(coord)
-            }
-          }
+    let newSteps = steps.dropFirst()
+    for (stepIdx, step) in newSteps.enumerated() {
+      var newGrid = grid
+      if newGrid.includes(coord: step) {
+        newGrid.raw[step.y][step.x] = "#"
+        if doesComeBack(step: step, path: newSteps[0..<stepIdx], grid: newGrid) {
+          count += 1
+          print("found a loop at", step)
         }
-
       }
     }
-
+    // 125 -> too low
+    // 200 -> too low
     // 115 -> too low
+    // 1713 -> not the right answer
+
     return count
   }
 }

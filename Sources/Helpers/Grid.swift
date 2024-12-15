@@ -32,6 +32,17 @@ struct Grid<Element: Sendable> {
 extension Grid: Sendable {
 
 }
+extension Grid where Element == Bool {
+  func toText(true black: Character = "█", false white: Character = " ") -> String {
+    String(
+      self.raw.map { l in
+        String(l.map { if $0 { black } else { white } })
+      }.joined(by: "\n"))
+  }
+  func toImage() -> String {
+    return "P1\n\(width) \(height)\n\(toText(true: "1", false: "0"))"
+  }
+}
 
 extension Grid where Element == Character {
   /// creates a Grid of characters from a multiline string
