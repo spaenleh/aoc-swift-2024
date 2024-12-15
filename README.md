@@ -13,7 +13,7 @@ Below is my current advancement in Advent of code:
 | Day 3 | :star: | :star: |
 | Day 4 | :star: | :star: |
 | Day 5 | :star: (22min) | :star: (21min) |
-| Day 6 | :star: | :sad: |
+| Day 6 | :star: |  |
 | Day 7 | :star: (45min) | :star: (33min) |
 | Day 8 | :star: (20min) | :star: (16min) |
 | Day 9 | :star: (1h51) | :star: (43min) |
@@ -32,6 +32,14 @@ Below is my current advancement in Advent of code:
 | Day 22 |  |  |
 | Day 23 |  |  |
 | Day 24 |  |  |
+
+## Out of order fun moments
+
+A collection of moments I want to remember.
+
+### When I finally saw the Christmas tree of day 14
+
+![day 14 tree](./assets/day14-tree.png)
 
 <details>
 <summary>How to use this repo</summary>
