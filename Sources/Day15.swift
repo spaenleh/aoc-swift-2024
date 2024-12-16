@@ -139,7 +139,7 @@ struct Day15: AdventDay {
   func part1() -> Int {
     var wareHouse = parseMap()
     // print(wareHouse.display())
-    for (idx, instruction) in instructions.enumerated() {
+    for (_, instruction) in instructions.enumerated() {
       // print("step \(idx), \(instruction.rawValue):\n")
       wareHouse.execute(instruction: instruction)
       // print(wareHouse.display())
