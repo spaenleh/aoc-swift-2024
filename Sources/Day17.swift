@@ -23,15 +23,10 @@ struct Computer {
   }
 
   mutating func executeOp(_ ops: Int, _ operand: Int, combo comboOp: Int, pointer: Int) -> Int {
-    var p = pointer
     func div(_ num: Int, _ denomShift: Int) -> Int {
       let denom = 1 << denomShift
       if denom > num || denomShift > num {
         return 0
-      }
-      if denom == 0 {
-        print("division by zero")
-        print("denomShift", denomShift)
       }
       return num / denom
     }
@@ -39,51 +34,36 @@ struct Computer {
     switch ops {
     case 0:
       // adv
-      let res = div(comboOp, registers.A)
-      print("adv", res)
-      registers.A = res
-      p += 2
+      registers.A = div(registers.A, comboOp)
     case 1:
       // bxl
       let res = registers.B ^ operand
-      print("bxl", res)
       registers.B = res
-      p += 2
     case 2:
       //bst
       let res = comboOp % 8
-      print("bst", operand, res)
       registers.B = res
-      p += 2
     case 3:
       // jnz
       if registers.A != 0 {
-        // jump by the value of the operand
-        p += comboOp
-      } else {
-        // simple increase
-        p += 2
+        // set the pointer to the value of the operand
+        return operand
       }
     case 4:
       // bxc
       registers.B ^= registers.C
-      // do nothing with operand
-      p += 2
     case 5:
       // out
       output.append(comboOp % 8)
-      p += 2
     case 6:
       // bdv
-      registers.B = div(comboOp, registers.A)
-      p += 2
+      registers.B = div(registers.A, comboOp)
     case 7:
       // cdv
-      registers.C = div(comboOp, registers.A)
-      p += 2
+      registers.C = div(registers.A, comboOp)
     default: break
     }
-    return p
+    return pointer + 2
   }
 
   mutating func execute() -> String {
@@ -104,7 +84,7 @@ struct Day17: AdventDay {
   var data: String
 
   func initialize() -> (instructions: [Int], registers: Registers) {
-    let parts = data.split(separator: "\n\n")
+    let parts = data.trimmed().split(separator: "\n\n")
     let instructions = parts[1].trimmingPrefix("Program: ").integers(separator: ",")
     var registers = Registers()
     if let match = parts[0].firstMatch(

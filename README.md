@@ -24,7 +24,7 @@ Below is my current advancement in Advent of code:
 | Day 14 | :star: | :star: |
 | Day 15 | :star: (1h04) |  |
 | Day 16 |  |  |
-| Day 17 |  |  |
+| Day 17 | :star: |  |
 | Day 18 |  |  |
 | Day 19 |  |  |
 | Day 20 |  |  |
