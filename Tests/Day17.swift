@@ -63,9 +63,20 @@ struct Day17Tests {
     #expect(challenge.part1() == "4,6,3,5,6,3,5,2,1,0")
   }
 
-  @Test("part2")
+  @Test(.disabled("part2"))
   func testPart2() async throws {
-    let challenge = Day17(data: testData)
-    #expect(challenge.part2() == 0)
+    // 66245665785645
+    let challenge = Day17(
+      data: """
+        Register A: 35048
+        Register B: 0
+        Register C: 0
+
+        Program: 2,4,1,7,7,5,1,7,4,6,0,3,5,5,3,0
+        """)
+    let res = challenge.part1()
+    let expectedRes = "2,4,1,7,7,5,1,7,4,6,0,3,5,5,3,0"
+    #expect(res.count == expectedRes.count)
+    #expect(res == expectedRes)
   }
 }

@@ -104,6 +104,26 @@ struct Day17: AdventDay {
   }
 
   func part2() -> Int {
+    // 2,4 -> assign to B modulo 8
+    // 1,7 -> xor B with 7 -> inverts bits in B
+    // 7,5 -> div register A with content of 2 pow B and put in C
+    // 1,7 -> again
+    // 4,6 -> B = B xor C
+    // 0, 3 -> register A = A div (2 pow 3)
+    // 5,5 -> out reg B
+    // 3,0 -> start over if A is not 0
+    //
+
+    // B needs to be 2
+    // 000 -> 010 (2)
+    // we start with B = 4 -> 100
+    // invert bits on B -> 011
+    // C needs to be result in X % 8 = 5
+    // a / 2^4
+    // requirements
+    // A needs to be 14 digits
+    // 266 gives the first right digit
+
     0
   }
 }
